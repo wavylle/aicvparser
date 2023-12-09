@@ -9,7 +9,9 @@ from langchain.memory import ConversationBufferMemory
 import json
 from openai import OpenAI
 
-embeddings = OpenAIEmbeddings(openai_api_key="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")
+OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
+
+embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
 
 prompt_template = """
         You are a helpful CV parser that returns name, email, phone number, skills, last company, qualification and years of experience of the candidate, based on the given text.
@@ -24,7 +26,7 @@ prompt = PromptTemplate(
 )
 
 # create chain using LLMChain
-llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo", openai_api_key="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")
+llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo", openai_api_key=OPENAI_API_KEY)
 
 chain = LLMChain(llm=llm, prompt=prompt)
 
@@ -60,7 +62,7 @@ def main():
         # Completion API
         client = OpenAI(
             # This is the default and can be omitted
-            api_key="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",
+            api_key=OPENAI_API_KEY,
         )
 
         response = client.chat.completions.create(messages=[
